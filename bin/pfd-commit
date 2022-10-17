@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env python3
 # cmd (table, ip, hw)
-table_base=$1
-alloc_ip=$2
-machine_hw=$3
+import sys
 
-echo "$table_base _alloc ADD $alloc_ip, psql query $machine_hw" >> ../pfd-log
+table = sys.argv[1]
+ip = sys.argv[2]
+hw = sys.argv[3]
 
+print(f"TABLE {table}_leased ADD {ip}")
