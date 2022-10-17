@@ -1,0 +1,8 @@
+#!/bin/sh
+# cmd (table, ip, hw)
+table_base=$1
+alloc_ip=$2
+machine_hw=$3
+
+echo `${table_base}_alloc ADD ${alloc_ip}, psql query (${machine_hw})` >> ../pfd-log
+
