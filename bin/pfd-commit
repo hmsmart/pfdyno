@@ -16,8 +16,6 @@ with open(f"/home/_pfdyno/anchors/{table}_leased.txt", "r+") as leases:
                 inLeaseTable = True
                 break
     if not inLeaseTable:
-        syslog.syslog(f"Must append ${ip}")
         leases.write(f"{ip}\n")
-    else:
-        syslog.syslog(f"{ip} present")
+        print(f"syscall pf to reload rule")
         
