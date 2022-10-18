@@ -9,11 +9,14 @@ ip = sys.argv[2]
 hw = sys.argv[3]
 
 #load table
-with open(f"/home/_pfdyno/anchors/{table}_leased", "rw+b") as leased:
-    lmap = mmap.mmap(leased.fileno(),0)
-    isPresent = lmap.find(ip)
-    if isPresent == -1:
-        syslog.syslog(f"{ip} not in table")
+with open(f"/home/_pfdyno/anchors/{table}_leased.txt", "r+") as leases:
+    inLeaseTable = False
+    for lease_line in leases:
+        if ip in lease_line:
+                inLeaseTable = True
+                break
+    if not inLeaseTable:
+        syslog.syslog(f"Must append ${ip}")
     else:
-        syslog.syslog(f"{ip} not present")
-    lmap.close()
+        syslog.syslog(f"{ip} present")
+        
