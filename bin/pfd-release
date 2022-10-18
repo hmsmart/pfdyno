@@ -2,7 +2,6 @@
 # cmd (table, ip, hw)
 import sys 
 import syslog
-import mmap
 
 table = sys.argv[1]
 ip = sys.argv[2]
@@ -10,18 +9,18 @@ hw = sys.argv[3]
 
 #load table
 with open(f"/home/_pfdyno/anchors/{table}_leased.txt", "r") as lf:
-    leases = lf.readLines()
+    leases = lf.readlines()
     inLeaseTable = False
     for lease_line in leases:
         if ip in lease_line:
                 inLeaseTable = True;
-                syslog.syslog("ip in file, removing")
+                syslog.syslog(f"Removing {ip} from lease table")
                 with open (f"/home/_pfdyno/anchors/{table}_leased.txt", "w") as wlf:
                     for lease_line in leases:
                         if not ip in lease_line:
                             wlf.write(lease_line)
                 break
     if inLeaseTable:
-        syslog.syslog(f"syscall to pf for reload");
-    if not inLeaseTable:
-        syslog.syslog(f"Do nothing :)")
+        syslog.syslog(f"Will syscall PF for table reload");
+    else:
+        syslog.syslog("do nothing :'^)")

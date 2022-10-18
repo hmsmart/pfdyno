@@ -2,7 +2,6 @@
 # cmd (table, ip, hw)
 import sys
 import syslog
-import mmap
 
 table = sys.argv[1]
 ip = sys.argv[2]
@@ -14,7 +13,7 @@ with open(f"/home/_pfdyno/anchors/{table}_leased.txt", "r+") as leases:
     for lease_line in leases:
         if ip in lease_line:
                 inLeaseTable = True
-                syslog.syslog(f"adding IP to table")
+                syslog.syslog(f"doing nothing :'^)")
                 break
     if not inLeaseTable:
         leases.write(f"{ip}\n")
