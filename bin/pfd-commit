@@ -14,8 +14,9 @@ with open(f"/home/_pfdyno/anchors/{table}_leased.txt", "r+") as leases:
     for lease_line in leases:
         if ip in lease_line:
                 inLeaseTable = True
+                syslog.syslog(f"adding IP to table")
                 break
     if not inLeaseTable:
         leases.write(f"{ip}\n")
-        print(f"syscall pf to reload rule")
+        syslog.syslog(f"syscall pf to reload rule")
         
